@@ -1,11 +1,13 @@
 function love.load()
-    tile_ref =
-    {
-        0 = "ground",
-        1 = "stone",
-        2 = "stair_start",
-        3 = "stair_goal"
-    }
+    tile_atlas = love.graphics.newImage("media/groundTiles.png")
+    sprite_dim = 32
+    scale_factor = 2
+    tile_ref = {}
+    tile_ref[0] = love.graphics.newQuad(0, 0, 32, 32, tile_atlas)
+    tile_ref[1] = love.graphics.newQuad(64, 0, 32, 32, tile_atlas)
+    tile_ref[2] = love.graphics.newQuad(96, 0, 32, 32, tile_atlas)
+    tile_ref[3] = love.graphics.newQuad(96, 0, 32, 32, tile_atlas)
+
     map = 
     {
         {0, 0, 0, 0, 3},
@@ -30,13 +32,17 @@ end
 
 function love.draw()
 
-    
+    draw_map()
     love.graphics.rectangle("fill", player.act_x, player.act_y, 32, 32)
 
 end
 
 function draw_map()
-    for 
+    for row, rval in ipairs(map) do
+        for col, cval in ipairs(rval) do
+            love.graphics.draw(tile_atlas, tile_ref[cval], (row - 1) * sprite_dim * scale_factor, (col - 1)  * sprite_dim * scale_factor, 0, scale_factor)
+        end
+    end
 end
 
 function love.update(dt)
