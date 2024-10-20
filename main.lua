@@ -1,12 +1,18 @@
 function love.load()
     tile_atlas = love.graphics.newImage("media/groundTiles.png")
+   
     sprite_dim = 32
-    scale_factor = 2
+    scale_factor = 3
+
+    map_left_padding = 20
+    map_height = sprite_dim * 5 * scale_factor
+    enemy_gui_height = sprite_dim * scale_factor
+    player_gui_height = sprite_dim * 2 * scale_factor
     tile_ref = {}
-    tile_ref[0] = love.graphics.newQuad(0, 0, 32, 32, tile_atlas)
-    tile_ref[1] = love.graphics.newQuad(64, 0, 32, 32, tile_atlas)
-    tile_ref[2] = love.graphics.newQuad(96, 0, 32, 32, tile_atlas)
-    tile_ref[3] = love.graphics.newQuad(96, 0, 32, 32, tile_atlas)
+    tile_ref[0] = love.graphics.newQuad(0, 0, sprite_dim, sprite_dim, tile_atlas)
+    tile_ref[1] = love.graphics.newQuad(64, 0, sprite_dim, sprite_dim, tile_atlas)
+    tile_ref[2] = love.graphics.newQuad(96, 0, sprite_dim, sprite_dim, tile_atlas)
+    tile_ref[3] = love.graphics.newQuad(96, 0, sprite_dim, sprite_dim, tile_atlas)
 
     map = 
     {
@@ -31,18 +37,25 @@ function love.load()
 end
 
 function love.draw()
-
+    draw_enemy_gui()
     draw_map()
+    draw_player_gui()
     love.graphics.rectangle("fill", player.act_x, player.act_y, 32, 32)
 
+end
+
+function draw_enemy_gui()
 end
 
 function draw_map()
     for row, rval in ipairs(map) do
         for col, cval in ipairs(rval) do
-            love.graphics.draw(tile_atlas, tile_ref[cval], (row - 1) * sprite_dim * scale_factor, (col - 1)  * sprite_dim * scale_factor, 0, scale_factor)
+            love.graphics.draw(tile_atlas, tile_ref[cval], (row - 1) * sprite_dim * scale_factor + map_left_padding, (col - 1)  * sprite_dim * scale_factor + enemy_gui_height, 0, scale_factor)
         end
     end
+end
+
+function draw_player_gui()
 end
 
 function love.update(dt)
